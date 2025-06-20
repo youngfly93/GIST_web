@@ -129,14 +129,15 @@ const Home: React.FC = () => {
         </article>
 
         {/* 数据分析网格 - 底部整行 */}
-        <article className="analysis-grid" aria-label="GIST数据分析">
-          <div className="analysis-header">
-            <BarChart3 className="feature-icon" size={40} />
-            <h3>GIST数据分析</h3>
-            <p>选择不同的组学分析模块，进行专业的数据分析</p>
-          </div>
+        <article className="analysis-grid-container" aria-label="GIST数据分析">
+          <div className="analysis-grid">
+            <div className="analysis-header">
+              <BarChart3 className="feature-icon" size={40} />
+              <h3>GIST数据分析</h3>
+              <p>选择不同的组学分析模块，进行专业的数据分析</p>
+            </div>
 
-          <div className="analysis-cards">
+            <div className="analysis-cards">
             {/* 基因组学 */}
             <div className="analysis-card-wrapper">
               <div className="analysis-card">
@@ -216,6 +217,7 @@ const Home: React.FC = () => {
                 <div className="skeleton-placeholder"></div>
               </div>
             </div>
+          </div>
           </div>
         </article>
       </section>
