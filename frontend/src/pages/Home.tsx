@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Bot, Dna, Microscope, BarChart3, Zap, Activity, Users, FlaskConical, GitBranch } from 'lucide-react';
 import MiniChat from '../components/MiniChat';
+import GeneAssistant from '../components/GeneAssistant';
 
 const Home: React.FC = () => {
   const [quickGene, setQuickGene] = useState('');
@@ -11,11 +12,15 @@ const Home: React.FC = () => {
       alert('请输入基因名称');
       return;
     }
-    
+
     // 构建GIST检索式
     const searchQuery = `(GIST) AND (${quickGene.trim()})`;
     const pubmedUrl = `https://www.pubmed.ai/results?q=${encodeURIComponent(searchQuery)}`;
     window.open(pubmedUrl, '_blank');
+  };
+
+  const handleGeneSelect = (gene: string) => {
+    setQuickGene(gene);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -78,6 +83,13 @@ const Home: React.FC = () => {
           </div>
 
           <div className="filter-content">
+            {/* 智能基因助手 */}
+            <GeneAssistant
+              onGeneSelect={handleGeneSelect}
+              height="200px"
+            />
+
+            {/* 基因搜索区域 */}
             <div className="gene-search-row">
               <input
                 type="text"
@@ -95,6 +107,8 @@ const Home: React.FC = () => {
                 <Microscope size={16} />
               </button>
             </div>
+
+            {/* 快速标签 */}
             <div className="gene-quick-tags">
               <div className="gene-tags">
                 {['TP53', 'KIT', 'PDGFRA'].map((gene) => (
