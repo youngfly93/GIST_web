@@ -63,7 +63,7 @@ const Home: React.FC = () => {
             <h3>GIST智能助手</h3>
             <p>与AI助手对话，学习GIST相关知识</p>
           </div>
-          <MiniChat height="calc(100vh - 400px)" />
+          <MiniChat height="300px" />
           <Link to="/ai-chat" className="full-chat-link">
             进入完整对话 →
           </Link>

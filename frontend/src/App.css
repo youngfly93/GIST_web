@@ -199,7 +199,8 @@
 
 /* Chat Card Specific Styles */
 .chat {
-  min-height: calc(100vh - 300px);
+  min-height: calc((100vh - 300px) / 2);
+  max-height: 500px;
 }
 
 .chat .feature-header {
@@ -210,7 +211,8 @@
 
 .chat .mini-chat {
   flex: 1;
-  min-height: 400px;
+  min-height: 250px;
+  max-height: 350px;
 }
 
 .full-chat-link {
@@ -390,6 +392,12 @@
 
 .card-btn.primary:hover {
   background: var(--clr-primary-700);
+}
+
+/* Filter Card Specific Styles */
+.filter {
+  min-height: calc((100vh - 300px) / 2);
+  max-height: 500px;
 }
 
 /* Filter Content Styles */
