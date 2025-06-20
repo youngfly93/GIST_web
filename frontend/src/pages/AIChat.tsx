@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
+import { Bot, Dna, Microscope, Hospital, Pill, BookOpen, CheckCircle, XCircle } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -118,14 +119,39 @@ const AIChat: React.FC = () => {
       <h1>GIST辅助智能助手</h1>
       <p className="page-description">协助了解胃肠道间质瘤（GIST）相关知识</p>
       
-      <div className="stream-toggle">
-        <label>
+      <div className="stream-toggle" style={{
+        display: 'flex',
+        justifyContent: 'center',
+        marginBottom: '20px'
+      }}>
+        <label style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+          padding: '8px 16px',
+          backgroundColor: '#F3F4F6',
+          borderRadius: '8px',
+          cursor: 'pointer',
+          transition: 'all 0.2s ease'
+        }}>
           <input
             type="checkbox"
             checked={streamMode}
             onChange={(e) => setStreamMode(e.target.checked)}
+            style={{ margin: 0 }}
           />
-          流式输出 {streamMode ? '✅' : '❌'}
+          <span style={{
+            fontSize: '14px',
+            fontWeight: '500',
+            color: '#374151'
+          }}>
+            流式输出
+          </span>
+          {streamMode ? (
+            <CheckCircle size={18} color="#10B981" />
+          ) : (
+            <XCircle size={18} color="#EF4444" />
+          )}
         </label>
       </div>
       
@@ -133,16 +159,74 @@ const AIChat: React.FC = () => {
         <div className="messages">
           {messages.length === 0 && (
             <div className="welcome-message">
-              <p>👋 你好！我是GIST辅助智能助手。</p>
-              <p>我可以协助您了解胃肠道间质瘤（GIST）相关知识：</p>
-              <p>
-                🧬 GIST基本概念和分子机制<br/>
-                🔬 基因突变信息（KIT、PDGFRA等）<br/>
-                🏥 诊断方法和治疗选择<br/>
-                💊 药物信息和作用机制<br/>
-                📚 研究进展和文献资料
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                marginBottom: '20px',
+                justifyContent: 'center'
+              }}>
+                <Bot size={28} color="#3B82F6" />
+                <span style={{
+                  fontSize: '20px',
+                  fontWeight: '600',
+                  color: '#1F2937'
+                }}>
+                  你好！我是GIST辅助智能助手。
+                </span>
+              </div>
+
+              <p style={{
+                textAlign: 'center',
+                marginBottom: '24px',
+                fontSize: '16px',
+                color: '#4B5563'
+              }}>
+                我可以协助您了解胃肠道间质瘤（GIST）相关知识：
               </p>
-              <p>请注意：我提供的是科普信息，具体医疗决策请咨询专业医生。</p>
+
+              <div style={{
+                margin: '24px 0',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+                alignItems: 'flex-start'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <Dna size={20} color="#8B5CF6" />
+                  <span style={{ fontSize: '15px', color: '#374151' }}>GIST基本概念和分子机制</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <Microscope size={20} color="#06B6D4" />
+                  <span style={{ fontSize: '15px', color: '#374151' }}>基因突变信息（KIT、PDGFRA等）</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <Hospital size={20} color="#EF4444" />
+                  <span style={{ fontSize: '15px', color: '#374151' }}>诊断方法和治疗选择</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <Pill size={20} color="#F59E0B" />
+                  <span style={{ fontSize: '15px', color: '#374151' }}>药物信息和作用机制</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <BookOpen size={20} color="#10B981" />
+                  <span style={{ fontSize: '15px', color: '#374151' }}>研究进展和文献资料</span>
+                </div>
+              </div>
+
+              <p style={{
+                fontSize: '14px',
+                color: '#6B7280',
+                fontStyle: 'italic',
+                textAlign: 'center',
+                marginTop: '24px',
+                padding: '12px',
+                backgroundColor: '#F9FAFB',
+                borderRadius: '8px',
+                border: '1px solid #E5E7EB'
+              }}>
+                请注意：我提供的是科普信息，具体医疗决策请咨询专业医生。
+              </p>
             </div>
           )}
           {messages.map((msg, index) => (

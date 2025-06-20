@@ -138,73 +138,83 @@ const Home: React.FC = () => {
 
           <div className="analysis-cards">
             {/* 基因组学 */}
-            <div className="analysis-card">
-              <Dna size={24} color="#1C484C" />
-              <span>基因组学</span>
-              <div className="card-input">
-                <input
-                  type="text"
-                  placeholder="输入基因名称 (如: KIT)"
-                  className="gene-input"
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
-                      const gene = e.currentTarget.value.trim();
+            <div className="analysis-card-wrapper">
+              <div className="analysis-card">
+                <Dna size={24} color="#1C484C" />
+                <span>基因组学</span>
+                <div className="card-input">
+                  <input
+                    type="text"
+                    placeholder="输入基因名称 (如: KIT)"
+                    className="gene-input"
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        const gene = e.currentTarget.value.trim();
+                        if (gene) {
+                          const url = `https://www.cbioportal.org/results/oncoprint?cancer_study_list=gist_msk_2025%2Cgist_msk_2022%2Cgist_msk_2023&Z_SCORE_THRESHOLD=2.0&RPPA_SCORE_THRESHOLD=2.0&profileFilter=mutations%2Cstructural_variants%2Cgistic%2Ccna&case_set_id=all&gene_list=${gene}&geneset_list=%20&tab_index=tab_visualize&Action=Submit&plots_horz_selection=%7B%22selectedDataSourceOption%22%3A%22gistic%22%7D&plots_vert_selection=%7B%7D&plots_coloring_selection=%7B%7D`;
+                          window.open(url, '_blank');
+                        }
+                      }
+                    }}
+                  />
+                  <button
+                    className="card-btn"
+                    onClick={(e) => {
+                      const input = e.currentTarget.previousElementSibling as HTMLInputElement;
+                      const gene = input.value.trim();
                       if (gene) {
                         const url = `https://www.cbioportal.org/results/oncoprint?cancer_study_list=gist_msk_2025%2Cgist_msk_2022%2Cgist_msk_2023&Z_SCORE_THRESHOLD=2.0&RPPA_SCORE_THRESHOLD=2.0&profileFilter=mutations%2Cstructural_variants%2Cgistic%2Ccna&case_set_id=all&gene_list=${gene}&geneset_list=%20&tab_index=tab_visualize&Action=Submit&plots_horz_selection=%7B%22selectedDataSourceOption%22%3A%22gistic%22%7D&plots_vert_selection=%7B%7D&plots_coloring_selection=%7B%7D`;
                         window.open(url, '_blank');
+                      } else {
+                        alert('请输入基因名称');
                       }
-                    }
-                  }}
-                />
-                <button
-                  className="card-btn"
-                  onClick={(e) => {
-                    const input = e.currentTarget.previousElementSibling as HTMLInputElement;
-                    const gene = input.value.trim();
-                    if (gene) {
-                      const url = `https://www.cbioportal.org/results/oncoprint?cancer_study_list=gist_msk_2025%2Cgist_msk_2022%2Cgist_msk_2023&Z_SCORE_THRESHOLD=2.0&RPPA_SCORE_THRESHOLD=2.0&profileFilter=mutations%2Cstructural_variants%2Cgistic%2Ccna&case_set_id=all&gene_list=${gene}&geneset_list=%20&tab_index=tab_visualize&Action=Submit&plots_horz_selection=%7B%22selectedDataSourceOption%22%3A%22gistic%22%7D&plots_vert_selection=%7B%7D&plots_coloring_selection=%7B%7D`;
-                      window.open(url, '_blank');
-                    } else {
-                      alert('请输入基因名称');
-                    }
-                  }}
-                >
-                  查询
-                </button>
+                    }}
+                  >
+                    查询
+                  </button>
+                </div>
               </div>
             </div>
 
             {/* 转录组学 */}
-            <div className="analysis-card">
-              <Zap size={24} color="#1C484C" />
-              <span>转录组学</span>
-              <button
-                className="card-btn primary"
-                onClick={() => window.open(import.meta.env.VITE_SHINY_URL || 'http://127.0.0.1:4964/', '_blank')}
-              >
-                进入分析 →
-              </button>
+            <div className="analysis-card-wrapper">
+              <div className="analysis-card">
+                <Zap size={24} color="#1C484C" />
+                <span>转录组学</span>
+                <button
+                  className="card-btn primary"
+                  onClick={() => window.open(import.meta.env.VITE_SHINY_URL || 'http://127.0.0.1:4964/', '_blank')}
+                >
+                  进入分析 →
+                </button>
+              </div>
             </div>
 
             {/* 蛋白组学 - 禁用态改为骨架 */}
-            <div className="analysis-card disabled">
-              <FlaskConical size={24} color="#9CA3AF" />
-              <span>蛋白组学</span>
-              <div className="skeleton-placeholder"></div>
+            <div className="analysis-card-wrapper disabled">
+              <div className="analysis-card disabled">
+                <FlaskConical size={24} color="#9CA3AF" />
+                <span>蛋白组学</span>
+                <div className="skeleton-placeholder"></div>
+              </div>
             </div>
 
             {/* 翻译后修饰组学 - 禁用态改为骨架 */}
-            <div className="analysis-card disabled">
-              <Activity size={24} color="#9CA3AF" />
-              <span>翻译后修饰组学</span>
-              <div className="skeleton-placeholder"></div>
+            <div className="analysis-card-wrapper disabled">
+              <div className="analysis-card disabled">
+                <Activity size={24} color="#9CA3AF" />
+                <span>翻译后修饰组学</span>
+                <div className="skeleton-placeholder"></div>
+              </div>
             </div>
 
             {/* 单细胞转录组学 - 禁用态改为骨架 */}
-            <div className="analysis-card disabled">
-              <GitBranch size={24} color="#9CA3AF" />
-              <span>单细胞转录组学</span>
-              <div className="skeleton-placeholder"></div>
+            <div className="analysis-card-wrapper disabled">
+              <div className="analysis-card disabled">
+                <GitBranch size={24} color="#9CA3AF" />
+                <span>单细胞转录组学</span>
+                <div className="skeleton-placeholder"></div>
+              </div>
             </div>
           </div>
         </article>

@@ -21,13 +21,19 @@ const GeneAssistant: React.FC<GeneAssistantProps> = ({
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesContainerRef.current) {
+      // 使用容器的scrollTop而不是scrollIntoView，避免影响整个页面
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
-    scrollToBottom();
+    // 延迟滚动，确保DOM更新完成
+    const timer = setTimeout(scrollToBottom, 50);
+    return () => clearTimeout(timer);
   }, [messages]);
 
   // 从AI回复中提取基因名称的函数
@@ -158,7 +164,7 @@ const GeneAssistant: React.FC<GeneAssistantProps> = ({
         <span>基因筛选助手</span>
       </div>
       
-      <div className="gene-assistant-messages">
+      <div className="gene-assistant-messages" ref={messagesContainerRef}>
         {messages.length === 0 ? (
           <div className="gene-assistant-welcome">
             <Dna size={24} color="#3B82F6" />

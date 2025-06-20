@@ -20,13 +20,19 @@ const MiniChat: React.FC<MiniChatProps> = ({
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesContainerRef.current) {
+      // 使用容器的scrollTop而不是scrollIntoView，避免影响整个页面
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
-    scrollToBottom();
+    // 延迟滚动，确保DOM更新完成
+    const timer = setTimeout(scrollToBottom, 50);
+    return () => clearTimeout(timer);
   }, [messages]);
 
   const handleSend = async () => {
@@ -117,7 +123,7 @@ const MiniChat: React.FC<MiniChatProps> = ({
 
   return (
     <div className="mini-chat" style={{ height }}>
-      <div className="mini-chat-messages">
+      <div className="mini-chat-messages" ref={messagesContainerRef}>
         {messages.length === 0 ? (
           <div className="mini-chat-welcome">
             <p>👋 您好！我是GIST AI助手</p>
