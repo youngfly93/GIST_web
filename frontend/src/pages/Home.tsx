@@ -86,7 +86,7 @@ const Home: React.FC = () => {
             {/* 智能基因助手 */}
             <GeneAssistant
               onGeneSelect={handleGeneSelect}
-              height="200px"
+              height="300px"
             />
 
             {/* 基因搜索区域 */}

@@ -214,8 +214,8 @@ body {
 
 /* Chat Card Specific Styles */
 .chat {
-  min-height: calc((100vh - 300px) / 2);
-  max-height: 500px;
+  min-height: calc((100vh - 300px) * 0.75);
+  max-height: 750px;
 }
 
 .chat .feature-header {
@@ -226,8 +226,8 @@ body {
 
 .chat .mini-chat {
   flex: 1;
-  min-height: 250px;
-  max-height: 350px;
+  min-height: 375px;
+  max-height: 525px;
 }
 
 .full-chat-link {
@@ -411,8 +411,8 @@ body {
 
 /* Filter Card Specific Styles */
 .filter {
-  min-height: calc((100vh - 300px) / 2);
-  max-height: 500px;
+  min-height: calc((100vh - 300px) * 0.75);
+  max-height: 750px;
 }
 
 /* Filter Content Styles */
@@ -451,8 +451,8 @@ body {
   flex: 1;
   padding: 12px;
   overflow-y: auto;
-  max-height: 180px;
-  min-height: 120px;
+  max-height: 270px;
+  min-height: 180px;
 }
 
 .gene-assistant-welcome {
