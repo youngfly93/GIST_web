@@ -321,23 +321,28 @@ body {
 
 .analysis-card {
   aspect-ratio: 1 / 1;
-  padding: 24px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
-  background: var(--clr-primary-050);
-  border: 1px solid var(--clr-primary-100);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(59, 130, 246, 0.15);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);
+  backdrop-filter: blur(8px);
   transition: all var(--transition-base);
   text-align: center;
   gap: 12px;
+  position: relative;
+  overflow: hidden;
 }
 
 .analysis-card:not(.disabled):hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--clr-primary-300);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.18);
+  border-color: rgba(59, 130, 246, 0.25);
+  background: rgba(255, 255, 255, 0.95);
 }
 
 .analysis-card span {
@@ -347,10 +352,11 @@ body {
 }
 
 .analysis-card.disabled {
-  opacity: 0.35;
+  opacity: 0.4;
   pointer-events: none;
-  background: var(--clr-gray-050);
-  border-color: var(--clr-gray-200);
+  background: rgba(248, 250, 252, 0.6);
+  border-color: rgba(203, 213, 225, 0.3);
+  box-shadow: 0 2px 8px rgba(148, 163, 184, 0.05);
 }
 
 .analysis-card.disabled span {
