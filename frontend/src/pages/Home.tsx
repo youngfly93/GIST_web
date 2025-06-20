@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Bot, Dna, Microscope, BarChart3 } from 'lucide-react';
+import { Bot, Dna, Microscope, BarChart3, Zap, Activity, Users, FlaskConical, GitBranch } from 'lucide-react';
 import MiniChat from '../components/MiniChat';
 
 const Home: React.FC = () => {
@@ -123,16 +123,85 @@ const Home: React.FC = () => {
             <div className="split-card-header">
               <BarChart3 size={48} color="#1C484C" />
               <h3>GIST数据分析</h3>
-              <p>访问GIST专业数据库，进行深度数据分析</p>
+              <p>选择不同的组学分析模块，进行专业的数据分析</p>
             </div>
-            
-            <div className="split-card-content">
-              <button
-                onClick={() => window.open(import.meta.env.VITE_SHINY_URL || 'http://127.0.0.1:4964/', '_blank')}
-                className="primary-action-button"
-              >
-                进入数据库 →
-              </button>
+
+            <div className="analysis-modules-grid">
+              {/* 基因组学 */}
+              <div className="analysis-module">
+                <Dna size={24} color="#1C484C" />
+                <span>基因组学</span>
+                <div className="module-input">
+                  <input
+                    type="text"
+                    placeholder="输入基因名称 (如: KIT)"
+                    className="gene-input"
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        const gene = e.currentTarget.value.trim();
+                        if (gene) {
+                          const url = `https://www.cbioportal.org/results/oncoprint?cancer_study_list=gist_msk_2025%2Cgist_msk_2022%2Cgist_msk_2023&Z_SCORE_THRESHOLD=2.0&RPPA_SCORE_THRESHOLD=2.0&profileFilter=mutations%2Cstructural_variants%2Cgistic%2Ccna&case_set_id=all&gene_list=${gene}&geneset_list=%20&tab_index=tab_visualize&Action=Submit&plots_horz_selection=%7B%22selectedDataSourceOption%22%3A%22gistic%22%7D&plots_vert_selection=%7B%7D&plots_coloring_selection=%7B%7D`;
+                          window.open(url, '_blank');
+                        }
+                      }
+                    }}
+                  />
+                  <button
+                    className="module-btn"
+                    onClick={(e) => {
+                      const input = e.currentTarget.previousElementSibling as HTMLInputElement;
+                      const gene = input.value.trim();
+                      if (gene) {
+                        const url = `https://www.cbioportal.org/results/oncoprint?cancer_study_list=gist_msk_2025%2Cgist_msk_2022%2Cgist_msk_2023&Z_SCORE_THRESHOLD=2.0&RPPA_SCORE_THRESHOLD=2.0&profileFilter=mutations%2Cstructural_variants%2Cgistic%2Ccna&case_set_id=all&gene_list=${gene}&geneset_list=%20&tab_index=tab_visualize&Action=Submit&plots_horz_selection=%7B%22selectedDataSourceOption%22%3A%22gistic%22%7D&plots_vert_selection=%7B%7D&plots_coloring_selection=%7B%7D`;
+                        window.open(url, '_blank');
+                      } else {
+                        alert('请输入基因名称');
+                      }
+                    }}
+                  >
+                    查询
+                  </button>
+                </div>
+              </div>
+
+              {/* 转录组学 */}
+              <div className="analysis-module">
+                <Zap size={24} color="#1C484C" />
+                <span>转录组学</span>
+                <button
+                  className="module-btn primary"
+                  onClick={() => window.open(import.meta.env.VITE_SHINY_URL || 'http://127.0.0.1:4964/', '_blank')}
+                >
+                  进入分析 →
+                </button>
+              </div>
+
+              {/* 蛋白组学 */}
+              <div className="analysis-module">
+                <FlaskConical size={24} color="#1C484C" />
+                <span>蛋白组学</span>
+                <button className="module-btn disabled" disabled>
+                  开发中...
+                </button>
+              </div>
+
+              {/* 翻译后修饰组学 */}
+              <div className="analysis-module">
+                <Activity size={24} color="#1C484C" />
+                <span>翻译后修饰组学</span>
+                <button className="module-btn disabled" disabled>
+                  开发中...
+                </button>
+              </div>
+
+              {/* 单细胞转录组学 */}
+              <div className="analysis-module">
+                <GitBranch size={24} color="#1C484C" />
+                <span>单细胞转录组学</span>
+                <button className="module-btn disabled" disabled>
+                  开发中...
+                </button>
+              </div>
             </div>
           </div>
         </div>
