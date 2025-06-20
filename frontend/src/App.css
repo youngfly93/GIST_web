@@ -7,12 +7,12 @@
 
 /* Global Container & 12-Column Grid System */
 .container {
-  max-width: 1280px;
+  max-width: 1200px;
   margin: auto;
   padding-inline: 24px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: 32px;
+  gap: 16px;
 }
 
 /* Navbar Styles */
