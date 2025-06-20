@@ -5,6 +5,16 @@
   flex-direction: column;
 }
 
+/* Global Container & 12-Column Grid System */
+.container {
+  max-width: 1280px;
+  margin: auto;
+  padding-inline: 24px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 32px;
+}
+
 /* Navbar Styles */
 .navbar {
   background: #fff;
@@ -155,24 +165,354 @@
   transform: translateY(0);
 }
 
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--space-4);
+/* GIST Workbench Layout Areas */
+.gist-workbench {
   margin-bottom: var(--space-6);
   animation: fadeIn var(--transition-slow) ease-out 0.4s backwards;
 }
 
-/* Two columns layout for AI chat and split container */
-@media (min-width: 768px) {
-  .features-grid {
-    grid-template-columns: repeat(2, 1fr);
+/* Layout Areas */
+.chat {
+  grid-column: 1 / span 4; /* 左 4/12 */
+}
+
+.filter {
+  grid-column: 9 / span 4; /* 右 4/12 */
+}
+
+.analysis-grid {
+  grid-column: 1 / -1; /* 整行 12/12 */
+}
+
+/* Card Base Styles */
+.card {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Chat Card Specific Styles */
+.chat {
+  min-height: calc(100vh - 300px);
+}
+
+.chat .feature-header {
+  flex-shrink: 0;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.chat .mini-chat {
+  flex: 1;
+  min-height: 400px;
+}
+
+.full-chat-link {
+  margin-top: 16px;
+  padding: 12px 24px;
+  background: var(--clr-primary-500);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  transition: all var(--transition-base);
+  flex-shrink: 0;
+}
+
+.full-chat-link:hover {
+  background: var(--clr-primary-700);
+  transform: translateY(-1px);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--clr-primary-500), var(--clr-primary-300));
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+  transform-origin: left;
+}
+
+.card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-lg);
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+/* Analysis Grid Styles */
+.analysis-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.analysis-header .feature-icon {
+  margin-bottom: var(--space-2);
+  color: var(--clr-primary-500);
+}
+
+.analysis-header h3 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--clr-primary-500);
+  margin-bottom: var(--space-1);
+}
+
+.analysis-header p {
+  font-size: var(--text-base);
+  color: var(--clr-gray-700);
+  margin: 0;
+}
+
+/* Analysis Cards Grid - Auto-fit with aspect ratio */
+.analysis-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+}
+
+.analysis-card {
+  aspect-ratio: 1 / 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--clr-primary-050);
+  border: 1px solid var(--clr-primary-100);
+  transition: all var(--transition-base);
+  text-align: center;
+  gap: 12px;
+}
+
+.analysis-card:not(.disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--clr-primary-300);
+}
+
+.analysis-card span {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--clr-primary-700);
+}
+
+.analysis-card.disabled {
+  opacity: 0.35;
+  pointer-events: none;
+  background: var(--clr-gray-050);
+  border-color: var(--clr-gray-200);
+}
+
+.analysis-card.disabled span {
+  color: var(--clr-gray-500);
+}
+
+/* Skeleton Placeholder for Disabled Cards */
+.skeleton-placeholder {
+  width: 80%;
+  height: 32px;
+  background: linear-gradient(90deg, var(--clr-gray-200) 25%, var(--clr-gray-100) 50%, var(--clr-gray-200) 75%);
+  background-size: 200% 100%;
+  border-radius: 6px;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
   }
-  
-  /* Ensure both containers have equal height */
-  .ai-chat-card,
-  .feature-split-container {
-    min-height: 600px;
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Card Input and Button Styles */
+.card-input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-top: auto;
+}
+
+.card-input .gene-input {
+  padding: 8px 12px;
+  border: 1px solid var(--clr-gray-300);
+  border-radius: 6px;
+  font-size: var(--text-sm);
+  text-align: center;
+  transition: border-color var(--transition-fast);
+}
+
+.card-input .gene-input:focus {
+  outline: none;
+  border-color: var(--clr-primary-500);
+}
+
+.card-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: var(--clr-primary-100);
+  color: var(--clr-primary-700);
+  border: 1px solid var(--clr-primary-300);
+}
+
+.card-btn:hover {
+  background: var(--clr-primary-200);
+  transform: translateY(-1px);
+}
+
+.card-btn.primary {
+  background: var(--clr-primary-500);
+  color: white;
+  border-color: var(--clr-primary-500);
+}
+
+.card-btn.primary:hover {
+  background: var(--clr-primary-700);
+}
+
+/* Filter Content Styles */
+.filter-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+}
+
+.gene-search-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter .feature-header {
+  text-align: center;
+  margin-bottom: 24px;
+  flex-shrink: 0;
+}
+
+.filter .feature-header .feature-icon {
+  margin-bottom: var(--space-2);
+  color: var(--clr-primary-500);
+}
+
+.filter .feature-header h3 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--clr-primary-500);
+  margin-bottom: var(--space-1);
+}
+
+.filter .feature-header p {
+  font-size: var(--text-base);
+  color: var(--clr-gray-700);
+  margin: 0;
+}
+
+/* Improved Gene Search Input */
+.filter .gene-search-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid var(--clr-primary-100);
+  border-radius: 8px;
+  font-size: var(--text-base);
+  outline: none;
+  transition: all var(--transition-base);
+}
+
+.filter .gene-search-input:focus {
+  border-color: var(--clr-primary-500);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filter .gene-search-button {
+  padding: 12px;
+  background: var(--clr-primary-500);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+}
+
+.filter .gene-search-button:hover:not(:disabled) {
+  background: var(--clr-primary-700);
+  transform: translateY(-1px);
+}
+
+.filter .gene-search-button:disabled {
+  background: var(--clr-gray-300);
+  cursor: not-allowed;
+}
+
+/* Responsive Breakpoints */
+/* 平板 (<1024 px)：两列布局 */
+@media (max-width: 1023px) {
+  .chat {
+    grid-column: 1 / span 6;
+  }
+
+  .filter {
+    grid-column: 7 / span 6;
+  }
+
+  .analysis-grid {
+    grid-column: 1 / -1;
+  }
+}
+
+/* 移动 (<768 px)：单列堆叠 */
+@media (max-width: 767px) {
+  .container {
+    padding-inline: 16px;
+    gap: 24px;
+  }
+
+  .chat,
+  .filter,
+  .analysis-grid {
+    grid-column: 1 / -1;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .analysis-cards {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+  }
+
+  .analysis-card {
+    padding: 16px;
+    gap: 8px;
   }
 }
 
