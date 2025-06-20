@@ -171,13 +171,13 @@
   animation: fadeIn var(--transition-slow) ease-out 0.4s backwards;
 }
 
-/* Layout Areas */
+/* Layout Areas - Wider cards with smaller gap */
 .chat {
-  grid-column: 1 / span 4; /* 左 4/12 */
+  grid-column: 1 / span 6; /* 左 6/12 */
 }
 
 .filter {
-  grid-column: 9 / span 4; /* 右 4/12 */
+  grid-column: 7 / span 6; /* 右 6/12 */
 }
 
 .analysis-grid {
@@ -473,7 +473,7 @@
 }
 
 /* Responsive Breakpoints */
-/* 平板 (<1024 px)：两列布局 */
+/* 平板 (<1024 px)：保持两列布局 */
 @media (max-width: 1023px) {
   .chat {
     grid-column: 1 / span 6;
