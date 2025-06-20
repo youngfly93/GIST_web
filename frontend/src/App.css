@@ -224,6 +224,24 @@ body {
   margin-bottom: 16px;
 }
 
+.chat .feature-header .feature-icon {
+  margin-bottom: var(--space-2);
+  color: var(--clr-primary-500);
+}
+
+.chat .feature-header h3 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--clr-primary-500);
+  margin-bottom: var(--space-1);
+}
+
+.chat .feature-header p {
+  font-size: var(--text-base);
+  color: var(--clr-gray-700);
+  margin: 0;
+}
+
 .chat .mini-chat {
   flex: 1;
   min-height: 375px;
