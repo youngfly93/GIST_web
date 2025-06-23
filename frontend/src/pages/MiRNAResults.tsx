@@ -125,58 +125,64 @@ const MiRNAResults: React.FC = () => {
         )}
 
         {!error && filteredResults.length > 0 && (
-          <div className="results-grid">
-            {filteredResults.map((item, index) => (
-              <div key={`${item.miRTarBaseID}-${index}`} className="mirna-card">
-                <div className="card-header">
-                  <h3 className="mirna-id">{item.id}</h3>
-                  <span className={`evidence-badge ${item.evidence.toLowerCase().replace(/\s+/g, '-')}`}>
-                    {item.evidence}
-                  </span>
-                </div>
-                
-                <div className="card-content">
-                  {item.experiments && (
-                    <div className="experiments">
-                      <strong>实验方法:</strong>
-                      <p>{item.experiments}</p>
-                    </div>
-                  )}
-                  
-                  {item.miRTarBaseID && (
-                    <div className="database-id">
-                      <strong>miRTarBase ID:</strong> {item.miRTarBaseID}
-                    </div>
-                  )}
-                  
-                  {item.pmid && (
-                    <div className="pmid">
-                      <strong>参考文献:</strong> 
-                      <a 
-                        href={`https://pubmed.ncbi.nlm.nih.gov/${item.pmid}`}
+          <div className="results-table-container">
+            <table className="results-table">
+              <thead>
+                <tr>
+                  <th>miRNA ID</th>
+                  <th>证据类型</th>
+                  <th>实验方法</th>
+                  <th>miRTarBase ID</th>
+                  <th>参考文献</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredResults.map((item, index) => (
+                  <tr key={`${item.miRTarBaseID}-${index}`} className="result-row">
+                    <td className="mirna-id-cell">
+                      <span className="mirna-id">{item.id}</span>
+                    </td>
+                    <td className="evidence-cell">
+                      <span className={`evidence-badge ${item.evidence.toLowerCase().replace(/\s+/g, '-')}`}>
+                        {item.evidence}
+                      </span>
+                    </td>
+                    <td className="experiments-cell">
+                      <div className="experiments-text" title={item.experiments}>
+                        {item.experiments || '-'}
+                      </div>
+                    </td>
+                    <td className="database-id-cell">
+                      <span className="database-id">{item.miRTarBaseID || '-'}</span>
+                    </td>
+                    <td className="pmid-cell">
+                      {item.pmid ? (
+                        <a
+                          href={`https://pubmed.ncbi.nlm.nih.gov/${item.pmid}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="pmid-link"
+                        >
+                          PMID: {item.pmid}
+                        </a>
+                      ) : '-'}
+                    </td>
+                    <td className="actions-cell">
+                      <a
+                        href={item.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="pmid-link"
+                        className="external-link"
+                        title="查看 miRBase 详情"
                       >
-                        PMID: {item.pmid}
+                        <ExternalLink size={16} />
                       </a>
-                    </div>
-                  )}
-                </div>
-                
-                <div className="card-footer">
-                  <a 
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="external-link"
-                  >
-                    <ExternalLink size={16} />
-                    查看 miRBase 详情
-                  </a>
-                </div>
-              </div>
-            ))}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </main>
