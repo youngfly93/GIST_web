@@ -41,7 +41,16 @@ final_*.R
 
 # Large data files
 hsa_MTI.csv
-*.csv
+hsa_MTI.csv.crdownload
+circRNA_interaction.txt
+lncRNA_interaction.txt
+miRNA_interaction.txt
+*.gz
+*.tar.gz
+*.rar
+hscores_human_gencode27/
+interaction_NPInterv5.txt.gz
+"1.Manual curation of experimentally validated ceRNAs.rar"
 backend/data/*.json
 
 # Node.js
