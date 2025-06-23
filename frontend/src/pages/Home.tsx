@@ -191,6 +191,33 @@ const Home: React.FC = () => {
               </div>
             </div>
 
+            {/* 蛋白组学 - 禁用态改为骨架 */}
+            <div className="analysis-card-wrapper disabled">
+              <div className="analysis-card disabled">
+                <FlaskConical size={24} color="#9CA3AF" />
+                <span>蛋白组学</span>
+                <div className="skeleton-placeholder"></div>
+              </div>
+            </div>
+
+            {/* 翻译后修饰组学 - 禁用态改为骨架 */}
+            <div className="analysis-card-wrapper disabled">
+              <div className="analysis-card disabled">
+                <Activity size={24} color="#9CA3AF" />
+                <span>翻译后修饰组学</span>
+                <div className="skeleton-placeholder"></div>
+              </div>
+            </div>
+
+            {/* 单细胞转录组学 - 禁用态改为骨架 */}
+            <div className="analysis-card-wrapper disabled">
+              <div className="analysis-card disabled">
+                <GitBranch size={24} color="#9CA3AF" />
+                <span>单细胞转录组学</span>
+                <div className="skeleton-placeholder"></div>
+              </div>
+            </div>
+
             {/* 非编码RNA */}
             <div className="analysis-card-wrapper">
               <div className="analysis-card">
@@ -227,24 +254,6 @@ const Home: React.FC = () => {
                     查询
                   </button>
                 </div>
-              </div>
-            </div>
-
-            {/* 翻译后修饰组学 - 禁用态改为骨架 */}
-            <div className="analysis-card-wrapper disabled">
-              <div className="analysis-card disabled">
-                <Activity size={24} color="#9CA3AF" />
-                <span>翻译后修饰组学</span>
-                <div className="skeleton-placeholder"></div>
-              </div>
-            </div>
-
-            {/* 单细胞转录组学 - 禁用态改为骨架 */}
-            <div className="analysis-card-wrapper disabled">
-              <div className="analysis-card disabled">
-                <GitBranch size={24} color="#9CA3AF" />
-                <span>单细胞转录组学</span>
-                <div className="skeleton-placeholder"></div>
               </div>
             </div>
           </div>
