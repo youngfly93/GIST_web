@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Bot, Dna, Microscope, BarChart3, Zap, Activity, Users, FlaskConical, GitBranch, Rss } from 'lucide-react';
 import MiniChat from '../components/MiniChat';
 import GeneAssistant from '../components/GeneAssistant';
 
 const Home: React.FC = () => {
   const [quickGene, setQuickGene] = useState('');
+  const navigate = useNavigate();
 
   const handleQuickSearch = () => {
     if (!quickGene.trim()) {
@@ -38,12 +39,18 @@ const Home: React.FC = () => {
         return;
       }
 
-      // 调用后端API查询本地数据
+      // 如果选择miRNA，跳转到专门的结果页面
+      if (ncRNAType === 'miRNA') {
+        navigate(`/mirna-results?gene=${encodeURIComponent(gene)}`);
+        return;
+      }
+
+      // 其他类型调用后端API查询本地数据
       const response = await fetch(`/api/ncrna/query?gene=${encodeURIComponent(gene)}&type=${ncRNAType}`);
       if (response.ok) {
         const data = await response.json();
         if (data.results && data.results.length > 0) {
-          // 显示结果弹窗或跳转到结果页面
+          // 显示结果弹窗
           showNcRNAResults(gene, ncRNAType, data.results);
         } else {
           alert(`未找到基因 ${gene} 相关的 ${ncRNAType} 数据`);

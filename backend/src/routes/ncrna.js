@@ -1,5 +1,5 @@
 import express from 'express';
-import { queryNcRNA } from '../services/ncRNAService.js';
+import { queryNcRNA, queryMiRNAFromCSV } from '../services/ncRNAService.js';
 
 const router = express.Router();
 
@@ -16,7 +16,14 @@ router.get('/query', async (req, res) => {
       return res.status(400).json({ error: '无效的ncRNA类型' });
     }
 
-    const results = await queryNcRNA(gene.toUpperCase(), type);
+    let results;
+
+    // 如果查询miRNA，优先使用CSV文件数据
+    if (type === 'miRNA') {
+      results = await queryMiRNAFromCSV(gene);
+    } else {
+      results = await queryNcRNA(gene.toUpperCase(), type);
+    }
     
     res.json({
       gene: gene.toUpperCase(),

@@ -39,6 +39,16 @@ final_*.R
 *_fix.R
 *_test.R
 
+# Large data files
+hsa_MTI.csv
+*.csv
+backend/data/*.json
+
+# Node.js
+node_modules/
+*.log
+.env
+
 # Temporary analysis files
 mcm7_*.txt
 mcm7_*.json
