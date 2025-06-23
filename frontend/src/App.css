@@ -415,6 +415,11 @@ body {
   border-color: rgba(16, 185, 129, 0.15);
 }
 
+.analysis-card-wrapper:nth-child(6) .analysis-card {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(255, 255, 255, 0.95));
+  border-color: rgba(168, 85, 247, 0.15);
+}
+
 .analysis-card:not(.disabled):hover {
   background: rgba(255, 255, 255, 1);
   border-color: rgba(255, 255, 255, 0.5);
@@ -444,6 +449,11 @@ body {
 .analysis-card-wrapper:nth-child(5) .analysis-card:not(.disabled):hover {
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(255, 255, 255, 1));
   border-color: rgba(16, 185, 129, 0.25);
+}
+
+.analysis-card-wrapper:nth-child(6) .analysis-card:not(.disabled):hover {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(255, 255, 255, 1));
+  border-color: rgba(168, 85, 247, 0.25);
 }
 
 .analysis-card span {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Bot, Dna, Microscope, BarChart3, Zap, Activity, Users, FlaskConical, GitBranch } from 'lucide-react';
+import { Bot, Dna, Microscope, BarChart3, Zap, Activity, Users, FlaskConical, GitBranch, Rss } from 'lucide-react';
 import MiniChat from '../components/MiniChat';
 import GeneAssistant from '../components/GeneAssistant';
 
@@ -191,12 +191,42 @@ const Home: React.FC = () => {
               </div>
             </div>
 
-            {/* 蛋白组学 - 禁用态改为骨架 */}
-            <div className="analysis-card-wrapper disabled">
-              <div className="analysis-card disabled">
-                <FlaskConical size={24} color="#9CA3AF" />
-                <span>蛋白组学</span>
-                <div className="skeleton-placeholder"></div>
+            {/* 非编码RNA */}
+            <div className="analysis-card-wrapper">
+              <div className="analysis-card">
+                <Rss size={24} color="#1C484C" />
+                <span>非编码RNA</span>
+                <div className="card-input">
+                  <input
+                    type="text"
+                    placeholder="输入基因名称 (如: TP53)"
+                    className="gene-input"
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        const gene = e.currentTarget.value.trim();
+                        if (gene) {
+                          const url = `http://www.rnainter.org/showSearch/?identifier_type=Symbol&Keyword=${gene}&Category=All&interaction_type=All&species=All&method=All&score1=0.0&score2=1.0`;
+                          window.open(url, '_blank');
+                        }
+                      }
+                    }}
+                  />
+                  <button
+                    className="card-btn"
+                    onClick={(e) => {
+                      const input = e.currentTarget.previousElementSibling as HTMLInputElement;
+                      const gene = input.value.trim();
+                      if (gene) {
+                        const url = `http://www.rnainter.org/showSearch/?identifier_type=Symbol&Keyword=${gene}&Category=All&interaction_type=All&species=All&method=All&score1=0.0&score2=1.0`;
+                        window.open(url, '_blank');
+                      } else {
+                        alert('请输入基因名称');
+                      }
+                    }}
+                  >
+                    查询
+                  </button>
+                </div>
               </div>
             </div>
 
