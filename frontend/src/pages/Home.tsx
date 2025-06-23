@@ -29,6 +29,93 @@ const Home: React.FC = () => {
     }
   };
 
+  const handleNcRNAQuery = async (gene: string, ncRNAType: string) => {
+    try {
+      // 如果选择全部类型，直接跳转到RNAinter
+      if (ncRNAType === 'all') {
+        const url = `http://www.rnainter.org/showSearch/?identifier_type=Symbol&Keyword=${gene}&Category=All&interaction_type=All&species=All&method=All&score1=0.0&score2=1.0`;
+        window.open(url, '_blank');
+        return;
+      }
+
+      // 调用后端API查询本地数据
+      const response = await fetch(`/api/ncrna/query?gene=${encodeURIComponent(gene)}&type=${ncRNAType}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.results && data.results.length > 0) {
+          // 显示结果弹窗或跳转到结果页面
+          showNcRNAResults(gene, ncRNAType, data.results);
+        } else {
+          alert(`未找到基因 ${gene} 相关的 ${ncRNAType} 数据`);
+        }
+      } else {
+        // 如果后端查询失败，回退到RNAinter
+        const url = `http://www.rnainter.org/showSearch/?identifier_type=Symbol&Keyword=${gene}&Category=All&interaction_type=All&species=All&method=All&score1=0.0&score2=1.0`;
+        window.open(url, '_blank');
+      }
+    } catch (error) {
+      console.error('查询ncRNA数据失败:', error);
+      // 出错时回退到RNAinter
+      const url = `http://www.rnainter.org/showSearch/?identifier_type=Symbol&Keyword=${gene}&Category=All&interaction_type=All&species=All&method=All&score1=0.0&score2=1.0`;
+      window.open(url, '_blank');
+    }
+  };
+
+  const showNcRNAResults = (gene: string, ncRNAType: string, results: any[]) => {
+    // 创建结果显示的HTML内容
+    const resultHtml = `
+      <div style="max-height: 400px; overflow-y: auto;">
+        <h3>基因 ${gene} 相关的 ${ncRNAType} (${results.length} 条记录)</h3>
+        <div style="display: grid; gap: 8px; margin-top: 16px;">
+          ${results.slice(0, 20).map(item => `
+            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 4px; background: #f9fafb;">
+              <strong>${item.id}</strong>
+              ${item.evidence ? `<span style="color: #6b7280; margin-left: 8px;">(${item.evidence})</span>` : ''}
+              <br>
+              <a href="${item.link}" target="_blank" style="color: #3b82f6; text-decoration: none; font-size: 12px;">
+                查看详情 →
+              </a>
+            </div>
+          `).join('')}
+          ${results.length > 20 ? `<div style="text-align: center; color: #6b7280; padding: 8px;">显示前20条，共${results.length}条记录</div>` : ''}
+        </div>
+      </div>
+    `;
+
+    // 创建模态框显示结果
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5); display: flex; align-items: center;
+      justify-content: center; z-index: 1000;
+    `;
+
+    const content = document.createElement('div');
+    content.style.cssText = `
+      background: white; padding: 24px; border-radius: 8px;
+      max-width: 600px; width: 90%; max-height: 80vh; overflow: hidden;
+    `;
+
+    content.innerHTML = resultHtml + `
+      <div style="margin-top: 16px; text-align: right;">
+        <button onclick="this.closest('[style*=fixed]').remove()"
+                style="padding: 8px 16px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">
+          关闭
+        </button>
+      </div>
+    `;
+
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+
+    // 点击背景关闭
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.remove();
+      }
+    });
+  };
+
   return (
     <div className="home-container">
       <header className="hero-section">
@@ -224,28 +311,39 @@ const Home: React.FC = () => {
                 <Rss size={24} color="#1C484C" />
                 <span>非编码RNA</span>
                 <div className="card-input">
-                  <input
-                    type="text"
-                    placeholder="输入基因名称 (如: TP53)"
-                    className="gene-input"
-                    onKeyPress={(e) => {
-                      if (e.key === 'Enter') {
-                        const gene = e.currentTarget.value.trim();
-                        if (gene) {
-                          const url = `http://www.rnainter.org/showSearch/?identifier_type=Symbol&Keyword=${gene}&Category=All&interaction_type=All&species=All&method=All&score1=0.0&score2=1.0`;
-                          window.open(url, '_blank');
+                  <div className="ncrna-input-group">
+                    <select className="ncrna-type-select">
+                      <option value="all">全部类型</option>
+                      <option value="miRNA">miRNA</option>
+                      <option value="lncRNA">lncRNA</option>
+                      <option value="circRNA">circRNA</option>
+                    </select>
+                    <input
+                      type="text"
+                      placeholder="输入基因名称 (如: TP53)"
+                      className="gene-input ncrna-gene-input"
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                          const gene = e.currentTarget.value.trim();
+                          const select = e.currentTarget.parentElement?.querySelector('.ncrna-type-select') as HTMLSelectElement;
+                          const ncRNAType = select?.value || 'all';
+                          if (gene) {
+                            handleNcRNAQuery(gene, ncRNAType);
+                          }
                         }
-                      }
-                    }}
-                  />
+                      }}
+                    />
+                  </div>
                   <button
                     className="card-btn"
                     onClick={(e) => {
-                      const input = e.currentTarget.previousElementSibling as HTMLInputElement;
+                      const inputGroup = e.currentTarget.previousElementSibling as HTMLElement;
+                      const input = inputGroup.querySelector('.ncrna-gene-input') as HTMLInputElement;
+                      const select = inputGroup.querySelector('.ncrna-type-select') as HTMLSelectElement;
                       const gene = input.value.trim();
+                      const ncRNAType = select.value;
                       if (gene) {
-                        const url = `http://www.rnainter.org/showSearch/?identifier_type=Symbol&Keyword=${gene}&Category=All&interaction_type=All&species=All&method=All&score1=0.0&score2=1.0`;
-                        window.open(url, '_blank');
+                        handleNcRNAQuery(gene, ncRNAType);
                       } else {
                         alert('请输入基因名称');
                       }

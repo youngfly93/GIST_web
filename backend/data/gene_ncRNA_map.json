@@ -1,0 +1,168 @@
+{
+  "TP53": {
+    "miRNA": [
+      {
+        "id": "hsa-miR-34a-5p",
+        "type": "miRNA",
+        "evidence": "Strong",
+        "link": "https://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=hsa-miR-34a-5p"
+      },
+      {
+        "id": "hsa-miR-125b-5p",
+        "type": "miRNA",
+        "evidence": "Weak",
+        "link": "https://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=hsa-miR-125b-5p"
+      },
+      {
+        "id": "hsa-miR-200c-3p",
+        "type": "miRNA",
+        "evidence": "Strong",
+        "link": "https://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=hsa-miR-200c-3p"
+      }
+    ],
+    "lncRNA": [
+      {
+        "id": "MALAT1",
+        "type": "lncRNA",
+        "evidence": "qPCR",
+        "link": "https://bigd.big.ac.cn/lncbook/transcript/MALAT1"
+      },
+      {
+        "id": "HOTAIR",
+        "type": "lncRNA",
+        "evidence": "Western blot",
+        "link": "https://bigd.big.ac.cn/lncbook/transcript/HOTAIR"
+      }
+    ],
+    "circRNA": [
+      {
+        "id": "hsa_circ_0000745",
+        "type": "circRNA",
+        "evidence": "MCS=0.95",
+        "link": "https://ngdc.cncb.ac.cn/circatlas/circ_detail1.php?ID=hsa_circ_0000745"
+      },
+      {
+        "id": "hsa_circ_0001982",
+        "type": "circRNA",
+        "evidence": "MCS=0.87",
+        "link": "https://ngdc.cncb.ac.cn/circatlas/circ_detail1.php?ID=hsa_circ_0001982"
+      }
+    ]
+  },
+  "KIT": {
+    "miRNA": [
+      {
+        "id": "hsa-miR-221-3p",
+        "type": "miRNA",
+        "evidence": "Strong",
+        "link": "https://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=hsa-miR-221-3p"
+      },
+      {
+        "id": "hsa-miR-222-3p",
+        "type": "miRNA",
+        "evidence": "Strong",
+        "link": "https://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=hsa-miR-222-3p"
+      }
+    ],
+    "lncRNA": [
+      {
+        "id": "NEAT1",
+        "type": "lncRNA",
+        "evidence": "qPCR",
+        "link": "https://bigd.big.ac.cn/lncbook/transcript/NEAT1"
+      }
+    ],
+    "circRNA": [
+      {
+        "id": "hsa_circ_0001649",
+        "type": "circRNA",
+        "evidence": "MCS=0.88",
+        "link": "https://ngdc.cncb.ac.cn/circatlas/circ_detail1.php?ID=hsa_circ_0001649"
+      }
+    ]
+  },
+  "PDGFRA": {
+    "miRNA": [
+      {
+        "id": "hsa-miR-34c-5p",
+        "type": "miRNA",
+        "evidence": "Strong",
+        "link": "https://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=hsa-miR-34c-5p"
+      }
+    ],
+    "lncRNA": [
+      {
+        "id": "XIST",
+        "type": "lncRNA",
+        "evidence": "Northern blot",
+        "link": "https://bigd.big.ac.cn/lncbook/transcript/XIST"
+      }
+    ],
+    "circRNA": [
+      {
+        "id": "hsa_circ_0002874",
+        "type": "circRNA",
+        "evidence": "MCS=0.92",
+        "link": "https://ngdc.cncb.ac.cn/circatlas/circ_detail1.php?ID=hsa_circ_0002874"
+      }
+    ]
+  },
+  "EGFR": {
+    "miRNA": [
+      {
+        "id": "hsa-miR-7-5p",
+        "type": "miRNA",
+        "evidence": "Strong",
+        "link": "https://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=hsa-miR-7-5p"
+      },
+      {
+        "id": "hsa-miR-128-3p",
+        "type": "miRNA",
+        "evidence": "Weak",
+        "link": "https://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=hsa-miR-128-3p"
+      }
+    ],
+    "lncRNA": [
+      {
+        "id": "H19",
+        "type": "lncRNA",
+        "evidence": "qPCR",
+        "link": "https://bigd.big.ac.cn/lncbook/transcript/H19"
+      }
+    ],
+    "circRNA": [
+      {
+        "id": "hsa_circ_0003570",
+        "type": "circRNA",
+        "evidence": "MCS=0.89",
+        "link": "https://ngdc.cncb.ac.cn/circatlas/circ_detail1.php?ID=hsa_circ_0003570"
+      }
+    ]
+  },
+  "MYC": {
+    "miRNA": [
+      {
+        "id": "hsa-let-7a-5p",
+        "type": "miRNA",
+        "evidence": "Strong",
+        "link": "https://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=hsa-let-7a-5p"
+      }
+    ],
+    "lncRNA": [
+      {
+        "id": "PVT1",
+        "type": "lncRNA",
+        "evidence": "qPCR",
+        "link": "https://bigd.big.ac.cn/lncbook/transcript/PVT1"
+      }
+    ],
+    "circRNA": [
+      {
+        "id": "hsa_circ_0000190",
+        "type": "circRNA",
+        "evidence": "MCS=0.91",
+        "link": "https://ngdc.cncb.ac.cn/circatlas/circ_detail1.php?ID=hsa_circ_0000190"
+      }
+    ]
+  }
+}
