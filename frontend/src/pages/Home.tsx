@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Bot, Dna, Microscope, BarChart3, Zap, Activity, Users, FlaskConical, GitBranch, Rss } from 'lucide-react';
+import { Bot, Dna, Microscope, BarChart3, Zap, Activity, FlaskConical, GitBranch, Rss } from 'lucide-react';
 import MiniChat from '../components/MiniChat';
 import GeneAssistant from '../components/GeneAssistant';
 
@@ -39,27 +39,21 @@ const Home: React.FC = () => {
         return;
       }
 
-      // 如果选择miRNA，跳转到专门的结果页面
+      // 各种类型都跳转到对应的结果页面
       if (ncRNAType === 'miRNA') {
         navigate(`/mirna-results?gene=${encodeURIComponent(gene)}`);
         return;
+      } else if (ncRNAType === 'circRNA') {
+        navigate(`/circrna-results?gene=${encodeURIComponent(gene)}&type=circRNA`);
+        return;
+      } else if (ncRNAType === 'lncRNA') {
+        navigate(`/lncrna-results?gene=${encodeURIComponent(gene)}&type=lncRNA`);
+        return;
       }
 
-      // 其他类型调用后端API查询本地数据
-      const response = await fetch(`/api/ncrna/query?gene=${encodeURIComponent(gene)}&type=${ncRNAType}`);
-      if (response.ok) {
-        const data = await response.json();
-        if (data.results && data.results.length > 0) {
-          // 显示结果弹窗
-          showNcRNAResults(gene, ncRNAType, data.results);
-        } else {
-          alert(`未找到基因 ${gene} 相关的 ${ncRNAType} 数据`);
-        }
-      } else {
-        // 如果后端查询失败，回退到RNAinter
-        const url = `http://www.rnainter.org/showSearch/?identifier_type=Symbol&Keyword=${gene}&Category=All&interaction_type=All&species=All&method=All&score1=0.0&score2=1.0`;
-        window.open(url, '_blank');
-      }
+      // 其他类型回退到RNAinter
+      const url = `http://www.rnainter.org/showSearch/?identifier_type=Symbol&Keyword=${gene}&Category=All&interaction_type=All&species=All&method=All&score1=0.0&score2=1.0`;
+      window.open(url, '_blank');
     } catch (error) {
       console.error('查询ncRNA数据失败:', error);
       // 出错时回退到RNAinter
@@ -68,60 +62,6 @@ const Home: React.FC = () => {
     }
   };
 
-  const showNcRNAResults = (gene: string, ncRNAType: string, results: any[]) => {
-    // 创建结果显示的HTML内容
-    const resultHtml = `
-      <div style="max-height: 400px; overflow-y: auto;">
-        <h3>基因 ${gene} 相关的 ${ncRNAType} (${results.length} 条记录)</h3>
-        <div style="display: grid; gap: 8px; margin-top: 16px;">
-          ${results.slice(0, 20).map(item => `
-            <div style="padding: 8px; border: 1px solid #e5e7eb; border-radius: 4px; background: #f9fafb;">
-              <strong>${item.id}</strong>
-              ${item.evidence ? `<span style="color: #6b7280; margin-left: 8px;">(${item.evidence})</span>` : ''}
-              <br>
-              <a href="${item.link}" target="_blank" style="color: #3b82f6; text-decoration: none; font-size: 12px;">
-                查看详情 →
-              </a>
-            </div>
-          `).join('')}
-          ${results.length > 20 ? `<div style="text-align: center; color: #6b7280; padding: 8px;">显示前20条，共${results.length}条记录</div>` : ''}
-        </div>
-      </div>
-    `;
-
-    // 创建模态框显示结果
-    const modal = document.createElement('div');
-    modal.style.cssText = `
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5); display: flex; align-items: center;
-      justify-content: center; z-index: 1000;
-    `;
-
-    const content = document.createElement('div');
-    content.style.cssText = `
-      background: white; padding: 24px; border-radius: 8px;
-      max-width: 600px; width: 90%; max-height: 80vh; overflow: hidden;
-    `;
-
-    content.innerHTML = resultHtml + `
-      <div style="margin-top: 16px; text-align: right;">
-        <button onclick="this.closest('[style*=fixed]').remove()"
-                style="padding: 8px 16px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">
-          关闭
-        </button>
-      </div>
-    `;
-
-    modal.appendChild(content);
-    document.body.appendChild(modal);
-
-    // 点击背景关闭
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.remove();
-      }
-    });
-  };
 
   return (
     <div className="home-container">

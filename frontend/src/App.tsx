@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import GeneInfo from './pages/GeneInfo';
 import AIChat from './pages/AIChat';
 import MiRNAResults from './pages/MiRNAResults';
+import NcRNAResults from './pages/NcRNAResults';
 import './App.css';
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
             <Route path="/gene-info" element={<GeneInfo />} />
             <Route path="/ai-chat" element={<AIChat />} />
             <Route path="/mirna-results" element={<MiRNAResults />} />
+            <Route path="/circrna-results" element={<NcRNAResults />} />
+            <Route path="/lncrna-results" element={<NcRNAResults />} />
           </Routes>
         </main>
         <footer className="footer">

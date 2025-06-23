@@ -9,9 +9,13 @@ const __dirname = path.dirname(__filename);
 const DATA_DIR = path.join(__dirname, '../../data');
 const GENE_NCRNA_MAP_FILE = path.join(DATA_DIR, 'gene_ncRNA_map.json');
 const HSA_MTI_CSV_FILE = path.join(__dirname, '../../../hsa_MTI.csv');
+const CIRCRNA_INTERACTION_FILE = path.join(__dirname, '../../../circRNA_interaction.txt');
+const LNCRNA_INTERACTION_FILE = path.join(__dirname, '../../../lncRNA_interaction.txt');
 
 let geneNcRNAMap = null;
 let hsaMTIData = null;
+let circRNAData = null;
+let lncRNAData = null;
 
 // 初始化数据
 async function initializeData() {
@@ -199,6 +203,144 @@ export async function queryMiRNAFromCSV(targetGene) {
   }));
 }
 
+// 初始化circRNA数据
+async function initializeCircRNAData() {
+  try {
+    if (!fs.existsSync(CIRCRNA_INTERACTION_FILE)) {
+      console.warn(`circRNA交互文件不存在: ${CIRCRNA_INTERACTION_FILE}`);
+      return false;
+    }
+
+    console.log(`正在读取circRNA文件: ${CIRCRNA_INTERACTION_FILE}`);
+    const data = fs.readFileSync(CIRCRNA_INTERACTION_FILE, 'utf8');
+    const lines = data.split('\n').filter(line => line.trim());
+
+    circRNAData = [];
+
+    for (const line of lines) {
+      const columns = line.split('\t');
+      if (columns.length >= 6) {
+        const record = {
+          id: columns[0] || '',
+          ncRNA_name: columns[1] || '',
+          ncRNA_id: columns[2] || '',
+          type: columns[3] || '',
+          target_gene: columns[4] || '',
+          target_gene_id: columns[5] || '',
+          description: columns[7] || '',
+          experiments: columns[8] || '',
+          pmid: columns[9] || '',
+          species: columns[10] || ''
+        };
+        circRNAData.push(record);
+      }
+    }
+
+    console.log(`已加载 ${circRNAData.length} 条circRNA交互数据`);
+    return true;
+  } catch (error) {
+    console.error('初始化circRNA数据失败:', error);
+    return false;
+  }
+}
+
+// 初始化lncRNA数据
+async function initializeLncRNAData() {
+  try {
+    if (!fs.existsSync(LNCRNA_INTERACTION_FILE)) {
+      console.warn(`lncRNA交互文件不存在: ${LNCRNA_INTERACTION_FILE}`);
+      return false;
+    }
+
+    console.log(`正在读取lncRNA文件: ${LNCRNA_INTERACTION_FILE}`);
+    const data = fs.readFileSync(LNCRNA_INTERACTION_FILE, 'utf8');
+    const lines = data.split('\n').filter(line => line.trim());
+
+    lncRNAData = [];
+
+    for (const line of lines) {
+      const columns = line.split('\t');
+      if (columns.length >= 6) {
+        const record = {
+          id: columns[0] || '',
+          ncRNA_name: columns[1] || '',
+          ncRNA_id: columns[2] || '',
+          type: columns[3] || '',
+          target_gene: columns[4] || '',
+          target_gene_id: columns[5] || '',
+          description: columns[7] || '',
+          experiments: columns[8] || '',
+          pmid: columns[9] || '',
+          species: columns[10] || ''
+        };
+        lncRNAData.push(record);
+      }
+    }
+
+    console.log(`已加载 ${lncRNAData.length} 条lncRNA交互数据`);
+    return true;
+  } catch (error) {
+    console.error('初始化lncRNA数据失败:', error);
+    return false;
+  }
+}
+
+// 查询基因相关的circRNA
+export async function queryCircRNAFromFile(targetGene) {
+  if (!circRNAData) {
+    const initialized = await initializeCircRNAData();
+    if (!initialized) {
+      throw new Error('circRNA数据未初始化');
+    }
+  }
+
+  const results = circRNAData.filter(record =>
+    record.target_gene &&
+    record.target_gene.toUpperCase() === targetGene.toUpperCase()
+  );
+
+  return results.map(record => ({
+    id: record.ncRNA_name || '',
+    type: 'circRNA',
+    ncRNA_id: record.ncRNA_id || '',
+    description: record.description || '',
+    experiments: record.experiments || '',
+    pmid: record.pmid || '',
+    species: record.species || '',
+    link: `https://www.circbank.cn/searchCirc.html?keyword=${record.ncRNA_name || ''}`,
+    interactionID: record.id || ''
+  }));
+}
+
+// 查询基因相关的lncRNA
+export async function queryLncRNAFromFile(targetGene) {
+  if (!lncRNAData) {
+    const initialized = await initializeLncRNAData();
+    if (!initialized) {
+      throw new Error('lncRNA数据未初始化');
+    }
+  }
+
+  const results = lncRNAData.filter(record =>
+    record.target_gene &&
+    record.target_gene.toUpperCase() === targetGene.toUpperCase()
+  );
+
+  return results.map(record => ({
+    id: record.ncRNA_name || '',
+    type: 'lncRNA',
+    ncRNA_id: record.ncRNA_id || '',
+    description: record.description || '',
+    experiments: record.experiments || '',
+    pmid: record.pmid || '',
+    species: record.species || '',
+    link: `https://lncipedia.org/db/search?q=${record.ncRNA_name || ''}`,
+    interactionID: record.id || ''
+  }));
+}
+
 // 启动时初始化数据
 initializeData();
 initializeCSVData();
+initializeCircRNAData();
+initializeLncRNAData();

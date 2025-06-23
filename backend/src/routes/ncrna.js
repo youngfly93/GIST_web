@@ -1,5 +1,5 @@
 import express from 'express';
-import { queryNcRNA, queryMiRNAFromCSV } from '../services/ncRNAService.js';
+import { queryNcRNA, queryMiRNAFromCSV, queryCircRNAFromFile, queryLncRNAFromFile } from '../services/ncRNAService.js';
 
 const router = express.Router();
 
@@ -18,9 +18,21 @@ router.get('/query', async (req, res) => {
 
     let results;
 
-    // 如果查询miRNA，优先使用CSV文件数据
+    // 根据类型使用不同的数据源
     if (type === 'miRNA') {
       results = await queryMiRNAFromCSV(gene);
+    } else if (type === 'circRNA') {
+      results = await queryCircRNAFromFile(gene);
+    } else if (type === 'lncRNA') {
+      results = await queryLncRNAFromFile(gene);
+    } else if (type === 'all') {
+      // 查询所有类型，合并结果
+      const [miRNAResults, circRNAResults, lncRNAResults] = await Promise.all([
+        queryMiRNAFromCSV(gene).catch(() => []),
+        queryCircRNAFromFile(gene).catch(() => []),
+        queryLncRNAFromFile(gene).catch(() => [])
+      ]);
+      results = [...miRNAResults, ...circRNAResults, ...lncRNAResults];
     } else {
       results = await queryNcRNA(gene.toUpperCase(), type);
     }
