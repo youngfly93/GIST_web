@@ -557,11 +557,13 @@ body {
 .gene-assistant {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--clr-primary-200);
+  border: 1px solid rgba(59, 130, 246, 0.15);
   border-radius: 8px;
-  background: rgba(59, 130, 246, 0.02);
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.06), rgba(255, 255, 255, 0.95));
+  backdrop-filter: blur(8px);
   overflow: hidden;
   margin-bottom: 16px;
+  transition: all var(--transition-base);
 }
 
 .gene-assistant-header {
@@ -569,11 +571,12 @@ body {
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  background: var(--clr-primary-100);
+  background: rgba(6, 182, 212, 0.1);
+  backdrop-filter: blur(4px);
   color: var(--clr-primary-700);
   font-size: var(--text-sm);
   font-weight: 600;
-  border-bottom: 1px solid var(--clr-primary-200);
+  border-bottom: 1px solid rgba(6, 182, 212, 0.15);
 }
 
 .gene-assistant-messages {
@@ -582,6 +585,7 @@ body {
   overflow-y: auto;
   max-height: 270px;
   min-height: 180px;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .gene-assistant-welcome {
@@ -609,12 +613,15 @@ body {
 }
 
 .gene-message.assistant .gene-message-content {
-  background: var(--clr-gray-100);
+  background: rgba(255, 255, 255, 0.9);
   color: var(--clr-gray-800);
   padding: 8px 12px;
   border-radius: 12px 12px 12px 4px;
   margin-right: 20%;
   font-size: var(--text-sm);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+  box-shadow: 0 2px 8px rgba(6, 182, 212, 0.08);
+  backdrop-filter: blur(4px);
 }
 
 .use-gene-button {
@@ -646,8 +653,9 @@ body {
 .gene-assistant-input {
   display: flex;
   padding: 8px;
-  border-top: 1px solid var(--clr-primary-200);
-  background: white;
+  border-top: 1px solid rgba(6, 182, 212, 0.15);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
 }
 
 .gene-assistant-input input {
@@ -1376,11 +1384,13 @@ body {
 .mini-chat {
   display: flex;
   flex-direction: column;
-  background: var(--clr-primary-050);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.06), rgba(255, 255, 255, 0.95));
+  backdrop-filter: blur(8px);
   border-radius: 8px;
   overflow: hidden;
   margin: 1rem 0;
-  border: 1px solid var(--clr-primary-100);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  transition: all var(--transition-base);
 }
 
 .mini-chat-messages {
@@ -1388,6 +1398,7 @@ body {
   padding: 1rem;
   overflow-y: auto;
   min-height: 250px;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .mini-chat-welcome {
@@ -1425,10 +1436,11 @@ body {
 }
 
 .mini-message.assistant .mini-message-content {
-  background: white;
+  background: rgba(255, 255, 255, 0.9);
   color: var(--clr-gray-900);
-  border: 1px solid var(--clr-primary-100);
-  box-shadow: 0 1px 2px rgba(28, 72, 76, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08);
+  backdrop-filter: blur(4px);
 }
 
 /* Markdown styles in mini chat */
@@ -1502,8 +1514,9 @@ body {
   display: flex;
   gap: 0.5rem;
   padding: 0.75rem;
-  background: white;
-  border-top: 1px solid var(--clr-primary-100);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  border-top: 1px solid rgba(59, 130, 246, 0.15);
 }
 
 .mini-chat-input input {
