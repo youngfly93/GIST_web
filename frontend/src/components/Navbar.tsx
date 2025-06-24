@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Dna } from 'lucide-react';
+import { Dna, Home, Database } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const location = useLocation();
@@ -27,13 +27,15 @@ const Navbar: React.FC = () => {
             to="/"
             className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
           >
-            首页
+            <Home size={18} />
+            <span>首页</span>
           </Link>
           <Link
             to="/dataset"
             className={`nav-link ${location.pathname === '/dataset' ? 'active' : ''}`}
           >
-            Dataset
+            <Database size={18} />
+            <span>Dataset</span>
           </Link>
         </div>
       </div>
