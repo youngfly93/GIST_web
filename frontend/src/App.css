@@ -18,7 +18,7 @@ body {
 
 /* Global Container & 12-Column Grid System */
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: auto;
   padding-inline: 24px;
   display: grid;
@@ -38,7 +38,7 @@ body {
 }
 
 .nav-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: var(--space-2) var(--space-4);
   display: flex;
@@ -97,7 +97,7 @@ body {
 /* Main Content */
 .main-content {
   flex: 1;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: var(--space-4);
   width: 100%;
@@ -406,6 +406,22 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+/* 图标容器样式 - 确保图标对齐和大小一致 */
+.analysis-card .card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+}
+
+/* 图标样式 - 占卡片约1/3高度 */
+.analysis-card svg {
+  width: 48px !important;
+  height: 48px !important;
+}
+
 /* 为不同的分析模块添加特定的背景色 */
 .analysis-card-wrapper:nth-child(1) .analysis-card {
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(255, 255, 255, 0.95));
@@ -553,7 +569,7 @@ body {
 }
 
 .results-header {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto 30px;
   background: white;
   border-radius: 12px;
@@ -641,7 +657,7 @@ body {
 }
 
 .results-content {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -1261,6 +1277,17 @@ body {
   .analysis-card {
     padding: 16px;
     gap: 8px;
+  }
+
+  /* 移动端图标样式调整 */
+  .analysis-card .card-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .analysis-card svg {
+    width: 40px !important;
+    height: 40px !important;
   }
 }
 
@@ -2793,7 +2820,7 @@ body {
 }
 
 /* Dataset responsive styles */
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   .dataset-table {
     font-size: var(--text-xs);
   }

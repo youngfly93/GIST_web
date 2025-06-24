@@ -175,7 +175,9 @@ const Home: React.FC = () => {
             {/* 基因组学 */}
             <div className="analysis-card-wrapper">
               <div className="analysis-card">
-                <Dna size={24} color="#1C484C" />
+                <div className="card-icon">
+                  <Dna size={48} color="#1C484C" />
+                </div>
                 <span>基因组学</span>
                 <div className="card-input">
                   <input
@@ -214,7 +216,9 @@ const Home: React.FC = () => {
             {/* 转录组学 */}
             <div className="analysis-card-wrapper">
               <div className="analysis-card">
-                <Zap size={24} color="#1C484C" />
+                <div className="card-icon">
+                  <Zap size={48} color="#1C484C" />
+                </div>
                 <span>转录组学</span>
                 <button
                   className="card-btn primary"
@@ -228,7 +232,9 @@ const Home: React.FC = () => {
             {/* 蛋白组学 - 禁用态改为骨架 */}
             <div className="analysis-card-wrapper disabled">
               <div className="analysis-card disabled">
-                <FlaskConical size={24} color="#9CA3AF" />
+                <div className="card-icon">
+                  <FlaskConical size={48} color="#9CA3AF" />
+                </div>
                 <span>蛋白组学</span>
                 <div className="skeleton-placeholder"></div>
               </div>
@@ -237,7 +243,9 @@ const Home: React.FC = () => {
             {/* 翻译后修饰组学 - 禁用态改为骨架 */}
             <div className="analysis-card-wrapper disabled">
               <div className="analysis-card disabled">
-                <Activity size={24} color="#9CA3AF" />
+                <div className="card-icon">
+                  <Activity size={48} color="#9CA3AF" />
+                </div>
                 <span>翻译后修饰组学</span>
                 <div className="skeleton-placeholder"></div>
               </div>
@@ -246,7 +254,9 @@ const Home: React.FC = () => {
             {/* 单细胞转录组学 - 禁用态改为骨架 */}
             <div className="analysis-card-wrapper disabled">
               <div className="analysis-card disabled">
-                <GitBranch size={24} color="#9CA3AF" />
+                <div className="card-icon">
+                  <GitBranch size={48} color="#9CA3AF" />
+                </div>
                 <span>单细胞转录组学</span>
                 <div className="skeleton-placeholder"></div>
               </div>
@@ -255,7 +265,9 @@ const Home: React.FC = () => {
             {/* 非编码RNA */}
             <div className="analysis-card-wrapper">
               <div className="analysis-card">
-                <Rss size={24} color="#1C484C" />
+                <div className="card-icon">
+                  <Rss size={48} color="#1C484C" />
+                </div>
                 <span>非编码RNA</span>
                 <div className="card-input">
                   <div className="ncrna-input-group">
