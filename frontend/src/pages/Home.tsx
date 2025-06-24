@@ -82,9 +82,9 @@ const Home: React.FC = () => {
         <h1 className="hero-title">GIST AI - 基因信息智能助手</h1>
         <p className="hero-subtitle">探索基因奥秘，AI赋能生命科学</p>
         <div className="hero-cta">
-          <button 
+          <button
             className="cta-button primary"
-            onClick={() => document.querySelector('.features-grid')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.querySelector('.gist-workbench')?.scrollIntoView({ behavior: 'smooth' })}
           >
             立即体验
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
