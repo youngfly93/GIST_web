@@ -19,12 +19,18 @@ router.get('/query', async (req, res) => {
     let results;
 
     // 根据类型使用不同的数据源
+    console.log(`查询请求: gene=${gene}, type=${type}`);
+
     if (type === 'miRNA') {
+      console.log('使用CSV文件查询miRNA');
       results = await queryMiRNAFromCSV(gene);
     } else if (type === 'circRNA') {
+      console.log('使用文件查询circRNA');
       results = await queryCircRNAFromFile(gene);
     } else if (type === 'lncRNA') {
+      console.log('使用文件查询lncRNA');
       results = await queryLncRNAFromFile(gene);
+      console.log(`lncRNA查询结果数量: ${results.length}`);
     } else if (type === 'all') {
       // 查询所有类型，合并结果
       const [miRNAResults, circRNAResults, lncRNAResults] = await Promise.all([
@@ -34,6 +40,7 @@ router.get('/query', async (req, res) => {
       ]);
       results = [...miRNAResults, ...circRNAResults, ...lncRNAResults];
     } else {
+      console.log('使用JSON数据查询');
       results = await queryNcRNA(gene.toUpperCase(), type);
     }
     

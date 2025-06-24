@@ -227,10 +227,16 @@ async function initializeCircRNAData() {
           type: columns[3] || '',
           target_gene: columns[4] || '',
           target_gene_id: columns[5] || '',
+          // 根据实际数据结构调整列索引
           description: columns[7] || '',
           experiments: columns[8] || '',
           pmid: columns[9] || '',
-          species: columns[10] || ''
+          species: columns[10] || '',
+          // 添加更多字段以便调试
+          interaction_type: columns[12] || '',
+          detection_method: columns[13] || '',
+          interaction_category: columns[14] || '',
+          source: columns[15] || ''
         };
         circRNAData.push(record);
       }
@@ -258,6 +264,13 @@ async function initializeLncRNAData() {
 
     lncRNAData = [];
 
+    // 调试：查看前几行数据结构
+    console.log('lncRNA文件前3行数据结构:');
+    for (let i = 0; i < Math.min(3, lines.length); i++) {
+      const columns = lines[i].split('\t');
+      console.log(`行 ${i + 1}: 列数=${columns.length}, 前6列:`, columns.slice(0, 6));
+    }
+
     for (const line of lines) {
       const columns = line.split('\t');
       if (columns.length >= 6) {
@@ -268,16 +281,32 @@ async function initializeLncRNAData() {
           type: columns[3] || '',
           target_gene: columns[4] || '',
           target_gene_id: columns[5] || '',
+          // 根据实际数据结构调整列索引
           description: columns[7] || '',
           experiments: columns[8] || '',
           pmid: columns[9] || '',
-          species: columns[10] || ''
+          species: columns[10] || '',
+          // 添加更多字段以便调试
+          interaction_type: columns[12] || '',
+          detection_method: columns[13] || '',
+          interaction_category: columns[14] || '',
+          source: columns[15] || ''
         };
         lncRNAData.push(record);
       }
     }
 
     console.log(`已加载 ${lncRNAData.length} 条lncRNA交互数据`);
+
+    // 调试：显示TP53相关的前几条记录
+    const tp53Records = lncRNAData.filter(record =>
+      record.target_gene && record.target_gene.toUpperCase() === 'TP53'
+    );
+    console.log(`TP53相关lncRNA记录数: ${tp53Records.length}`);
+    if (tp53Records.length > 0) {
+      console.log('TP53相关记录示例:', tp53Records.slice(0, 2));
+    }
+
     return true;
   } catch (error) {
     console.error('初始化lncRNA数据失败:', error);
