@@ -36,15 +36,26 @@ const NcRNAResults: React.FC = () => {
   const fetchNcRNAData = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/ncrna/query?gene=${encodeURIComponent(gene)}&type=${type}`);
-      
+      const url = `/api/ncrna/query?gene=${encodeURIComponent(gene)}&type=${type}`;
+      console.log('前端API调用:', url);
+
+      const response = await fetch(url);
+      console.log('API响应状态:', response.status);
+
       if (response.ok) {
         const data = await response.json();
+        console.log('API返回数据:', data);
+        console.log('结果数量:', data.results?.length || 0);
+        if (data.results?.length > 0) {
+          console.log('第一条记录:', data.results[0]);
+        }
         setResults(data.results || []);
       } else {
+        console.error('API响应错误:', response.status, response.statusText);
         setError('查询失败，请稍后重试');
       }
     } catch (err) {
+      console.error('API调用异常:', err);
       setError('网络错误，请检查连接');
     } finally {
       setLoading(false);
