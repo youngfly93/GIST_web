@@ -25,7 +25,7 @@ npm run dev:backend           # Backend only
 npm run dev:frontend          # Frontend only
 
 # R Shiny only (port 4964)
-R -e "shiny::runApp(port = 4964)"
+cd GIST_shiny && R -e "shiny::runApp(port = 4964)"
 ```
 
 ### Build & Deployment
@@ -38,18 +38,18 @@ cd frontend && npm run lint
 
 # Docker deployment
 docker-compose up -d
+
+# Manual deployment (see scripts/deploy.sh)
+./scripts/deploy.sh
 ```
 
-### Package Installation (R dependencies)
-```r
-# Basic packages
-install.packages(c("shiny", "bs4Dash", "shinyjs", "shinyBS", "tidyverse", "data.table", "stringr", "ggplot2", "ggsci", "patchwork", "pROC"))
+### Testing
+```bash
+# R tests (in GIST_shiny/)
+R -e "testthat::test_dir('tests')"
 
-# Bioconductor packages
-BiocManager::install(c("clusterProfiler", "org.Hs.eg.db", "EnsDb.Hsapiens.v75"))
-
-# AI functionality packages
-install.packages(c("httr", "jsonlite", "base64enc"))
+# Run specific test
+R -e "testthat::test_file('tests/test_modules.R')"
 ```
 
 ## Architecture & Structure
@@ -58,7 +58,7 @@ install.packages(c("httr", "jsonlite", "base64enc"))
 This is a **hybrid multi-stack application** with three main layers:
 
 1. **React Frontend** (`frontend/`): Modern TypeScript/React SPA with Vite build system
-   - Main pages: Home, GeneInfo, MiRNAResults, AIChat, GistDatabase
+   - Main pages: Home, GeneInfo, MiRNAResults, AIChat, GistDatabase, Guide, Dataset
    - Components: FloatingChat, GeneAssistant, SmartCapture, PageNavigator
    - Build: `npm run build`, Lint: `npm run lint`
 
@@ -67,18 +67,19 @@ This is a **hybrid multi-stack application** with three main layers:
    - Services: geneFetcher, ncRNAService
    - AI integration via external APIs (ARK/DeepSeek)
 
-3. **R Shiny Database** (root R files): Gene expression analysis engine
+3. **R Shiny Database** (`GIST_shiny/`): Gene expression analysis engine
    - **global.R**: Dependencies, data loading, analysis functions
    - **ui.R**: bs4Dash dashboard with 5 analysis modules
    - **server.R**: Reactive logic, plot generation, statistical analysis
-   - **AI modules**: `ai_chat_module.R`, `shiny_ai_module.R`
+   - **AI modules**: `modules/ai_chat_module.R`, `modules/shiny_ai_module.R`
 
 ### Service Integration
 - **Frontend** (port 5173) → **Backend** (port 8000) → **Shiny** (port 4964)
 - Docker deployment with Nginx reverse proxy
 - Non-coding RNA data integration (circRNA, lncRNA, miRNA)
+- WebSocket support for real-time AI chat
 
-### Key R Functions (global.R)
+### Key R Functions (GIST_shiny/global.R)
 - `Judge_GENESYMBOL()`: Gene symbol validation
 - `dbGIST_boxplot_*()`: Clinical parameter visualization (Risk, Mutation, Age, etc.)
 - `dbGIST_cor_ID()`: Gene-gene correlation analysis
@@ -86,20 +87,44 @@ This is a **hybrid multi-stack application** with three main layers:
 - `dbGIST_boxplot_PrePost()`: Pre/post treatment comparison
 
 ### Data Architecture
-- **Expression matrices**: `dbGIST_matrix(2).Rdata` with clinical annotations
+- **Expression matrices**: `GIST_shiny/original/dbGIST_matrix(2).Rdata` with clinical annotations
 - **Pathway databases**: MSigDB and WikiPathways for enrichment analysis
-- **Non-coding RNA**: Interaction data for circRNA, lncRNA, miRNA analysis
+- **Non-coding RNA**: `backend/data/gene_ncrna_mapping.json` for interaction data
 - **Clinical categories**: Age, Gender, Risk, Location, Mutation, Metastasis, Treatment response
 
 ### AI System Integration
 - Multi-modal AI chat system with image analysis capabilities
 - Active module tracking for context-aware analysis
 - Integration between Shiny reactive system and modern frontend
+- External AI APIs configured via environment variables
 
 ## Development Notes
 
+### Environment Setup
+```bash
+# Backend environment variables (.env)
+PORT=8000
+NODE_ENV=development
+AI_API_KEY=your_api_key
+
+# Frontend uses Vite env variables
+```
+
+### Key Technologies
 - **Reactive programming**: Shiny uses reactive expressions for dynamic updates
 - **Modern stack**: React/TypeScript frontend with Node.js API layer
 - **Statistical analysis**: t-tests, correlation analysis, ROC curves via R
 - **Visualization**: ggplot2 for statistical plots, React components for UI
 - **Deployment**: Docker Compose with multi-service orchestration
+
+### Common Development Tasks
+- **Adding new API endpoints**: Create route in `backend/src/routes/`, add to `backend/src/index.js`
+- **Adding new Shiny modules**: Create in `GIST_shiny/modules/`, source in `global.R`
+- **Frontend pages**: Add to `frontend/src/pages/`, update router in `App.tsx`
+- **Gene data updates**: Modify `GIST_shiny/original/` data files, restart Shiny
+
+### Debugging Tips
+- Check service ports: Frontend (5173), Backend (8000), Shiny (4964)
+- Shiny logs: Check R console output or Docker logs
+- API calls: Frontend uses `/api` prefix, proxied by Vite to backend
+- CORS issues: Backend configured for localhost development

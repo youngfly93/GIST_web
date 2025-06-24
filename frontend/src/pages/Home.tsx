@@ -6,6 +6,7 @@ import GeneAssistant from '../components/GeneAssistant';
 
 const Home: React.FC = () => {
   const [quickGene, setQuickGene] = useState('');
+  const [aiEnabled, setAiEnabled] = useState(true);
   const navigate = useNavigate();
 
   const handleQuickSearch = () => {
@@ -84,7 +85,19 @@ const Home: React.FC = () => {
         <div className="hero-cta">
           <button
             className="cta-button primary"
-            onClick={() => document.querySelector('.gist-workbench')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => {
+              const target = document.querySelector('.feature-header');
+              const navbar = document.querySelector('.navbar');
+              if (target && navbar) {
+                const targetRect = target.getBoundingClientRect();
+                const navbarHeight = navbar.getBoundingClientRect().height;
+                const offsetTop = window.pageYOffset + targetRect.top - navbarHeight - 20; // 20px额外间距
+                window.scrollTo({
+                  top: offsetTop,
+                  behavior: 'smooth'
+                });
+              }
+            }}
           >
             立即体验
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -169,6 +182,20 @@ const Home: React.FC = () => {
               <BarChart3 className="feature-icon" size={40} />
               <h3>GIST数据分析</h3>
               <p>选择不同的组学分析模块，进行专业的数据分析</p>
+              <div className="ai-toggle-container">
+                <label className="ai-toggle-label">
+                  <span>AI 功能</span>
+                  <div className="toggle-switch">
+                    <input
+                      type="checkbox"
+                      checked={aiEnabled}
+                      onChange={(e) => setAiEnabled(e.target.checked)}
+                      className="toggle-input"
+                    />
+                    <span className="toggle-slider"></span>
+                  </div>
+                </label>
+              </div>
             </div>
 
             <div className="analysis-cards">
@@ -222,7 +249,10 @@ const Home: React.FC = () => {
                 <span>转录组学</span>
                 <button
                   className="card-btn primary"
-                  onClick={() => window.open(import.meta.env.VITE_SHINY_URL || 'http://127.0.0.1:4964/', '_blank')}
+                  onClick={() => {
+                    const url = aiEnabled ? 'http://127.0.0.1:4964/' : 'http://127.0.0.1:4966/';
+                    window.open(url, '_blank');
+                  }}
                 >
                   进入分析 →
                 </button>
