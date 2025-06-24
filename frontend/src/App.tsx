@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
+import Dataset from './pages/Dataset';
 import GeneInfo from './pages/GeneInfo';
 import AIChat from './pages/AIChat';
 import MiRNAResults from './pages/MiRNAResults';
@@ -15,6 +16,7 @@ function App() {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/dataset" element={<Dataset />} />
             <Route path="/gene-info" element={<GeneInfo />} />
             <Route path="/ai-chat" element={<AIChat />} />
             <Route path="/mirna-results" element={<MiRNAResults />} />
