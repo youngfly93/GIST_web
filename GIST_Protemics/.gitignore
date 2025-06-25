@@ -1,0 +1,31 @@
+# R related files
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+*.Rproj
+.Rproj.user/
+
+# Shiny related
+rsconnect/
+www/plot_*.png
+
+# Data files (optional - uncomment if you want to exclude large data files)
+# *.rds
+# *.RData
+
+# Log files
+*.log
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*~
+*.tmp
+*.temp
+
+# IDE files
+.vscode/
+.idea/
