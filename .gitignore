@@ -1,0 +1,142 @@
+# R Shiny Application files
+# ==========================
+# R Data files
+.RData
+.Rhistory
+.Rproj.user
+
+# MacOS files
+.DS_Store
+._*
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Generated plot files
+current_plot_*.png
+backup_plot_*.png
+chat_plot_*.png
+
+# Backup files
+*_backup_*.R
+*.backup
+*_before_*.R.backup
+
+# API keys and sensitive data
+*api_key*
+*token*
+
+# Test and debug files
+test_*.R
+debug_*.R
+diagnose_*.R
+quick_*.R
+fix_*.R
+final_*.R
+*_fix.R
+*_test.R
+
+# Large data files
+hsa_MTI.csv
+hsa_MTI.csv.crdownload
+circRNA_interaction.txt
+lncRNA_interaction.txt
+miRNA_interaction.txt
+*.gz
+*.tar.gz
+*.rar
+hscores_human_gencode27/
+interaction_NPInterv5.txt.gz
+"1.Manual curation of experimentally validated ceRNAs.rar"
+backend/data/*.json
+
+# Node.js
+node_modules/
+*.log
+.env
+
+# Temporary analysis files
+mcm7_*.txt
+mcm7_*.json
+gene_*.txt
+
+# Development files
+example_*.R
+setup_*.R
+install_*.R
+migrate_*.R
+optimize_*.R
+check_*.R
+apply_*.R
+complete_*.R
+improved_*.R
+fixed_*.R
+simple_*.R
+ultra_*.R
+siliconflow_*.R
+url_based_*.R
+restore_*.R
+update_*.R
+
+# Claude development artifacts
+.claude/
+
+# Original data backup
+original/
+
+# Shell scripts
+*.sh
+
+# Frontend/Backend files (for hybrid projects)
+# ===========================================
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.development
+
+# Build outputs
+dist/
+build/
+*/dist/
+*/build/
+
+# Frontend logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+coverage/
+.nyc_output/
+
+# Log files
+*.log
+
+# GIST Shiny projects (exclude from main repository)
+GIST_shiny/
+GIST_Protemics/
+GIST_Phosphoproteomics/
+GIST_*/
+
+# GIST_shiny specific (when included as subdirectory)
+GIST_shiny/.Rhistory
+GIST_shiny/.RData
+GIST_shiny/*.log
+GIST_shiny/original/
+GIST_shiny/shiny.log
+GIST_shiny/nohup.out
